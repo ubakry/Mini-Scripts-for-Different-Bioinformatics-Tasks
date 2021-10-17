@@ -1,12 +1,12 @@
 #!/bin/bash
 
 ### Converting BCL to Fastq
-### Version 1.0 (Sep 28, 2021)
+### Version 1.1 (Oct 17, 2021)
 ### Copyright 2021 Usama Bakry (u.bakry@icloud.com)
 
 ## Command line options
 ## -----------------------------------------------------------------------------
-while getopts i:o:t: OPTION
+while getopts i:o:s:t: OPTION
 do
 case "${OPTION}"
 in
@@ -14,6 +14,8 @@ in
 i) INPUT=${OPTARG};;
 # Output directory
 o) OUTPUT=${OPTARG};;
+# Sample sheet file
+s) SAMPLESHEET=${OPTARG};;
 # Threads
 t) THREADS=${OPTARG};;
 esac
@@ -24,6 +26,7 @@ done
 ## -----------------------------------------------------------------------------                     
 echo -e "[     INFO    ] Input Directory  : ${INPUT}"
 echo -e "[     INFO    ] Output Directory : ${OUTPUT}"
+echo -e "[     INFO    ] Sample Sheet : ${SAMPLESHEET}"
 echo -e "[     INFO    ] Threads = ${THREADS}"
 ## -----------------------------------------------------------------------------
 
@@ -38,7 +41,7 @@ time {
 ## Print pipeline info
 ## -----------------------------------------------------------------------------                     
 echo -e "[     INFO    ] Converting BCL to Fastq"
-echo -e "[     INFO    ] Version 1.0 (Sep 28, 2021)"
+echo -e "[     INFO    ] Version 1.1 (Oct 17, 2021)"
 echo -e "[     INFO    ] Copyright 2021 Usama Bakry (u.bakry@icloud.com)\n"
 ## -----------------------------------------------------------------------------  
 
@@ -46,6 +49,7 @@ echo -e "[     INFO    ] Copyright 2021 Usama Bakry (u.bakry@icloud.com)\n"
 ## -----------------------------------------------------------------------------                     
 echo -e "[     INFO    ] Input Directory  : ${INPUT}"
 echo -e "[     INFO    ] Output Directory : ${OUTPUT}"
+echo -e "[     INFO    ] Sample Sheet : ${SAMPLESHEET}"
 echo -e "[     INFO    ] Threads = ${THREADS}\n"
 ## -----------------------------------------------------------------------------
 
@@ -77,6 +81,7 @@ echo -e "[   PROCESS   ] Converting BCL to Fastq..."
 # bcl2fastq command
 bcl2fastq -i $INPUT/Data/Intensities/BaseCalls \
     -o $OUTPUT \
+    --sample-sheet $SAMPLESHEET \
     --no-lane-splitting \
     -r $THREADS \
     -p $THREADS \
